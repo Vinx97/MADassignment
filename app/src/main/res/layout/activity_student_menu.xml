@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="my.edu.tarc.madassignment.studentMenuActivity">
+    tools:context="my.edu.tarc.madassignment.studentMenu.studentMenuActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -33,13 +33,13 @@
             android:layout_height="wrap_content">
 
             <android.support.design.widget.TabItem
-                android:id="@+id/tabItem"
+                android:id="@+id/subjectenrolled"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="subject enrroled" />
+                android:text="subject enrolled" />
 
             <android.support.design.widget.TabItem
-                android:id="@+id/tabItem2"
+                android:id="@+id/joinsubject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Join subject" />

@@ -1,17 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="my.edu.tarc.madassignment.studentSubjectAction.studentSubjectActionActivity$PlaceholderFragment">
-
+    tools:context="my.edu.tarc.madassignment.studentSubjectAction.filesActivity">
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
     <ListView
-        android:id="@+id/fileCategoryListView"
+        android:id="@+id/fileListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

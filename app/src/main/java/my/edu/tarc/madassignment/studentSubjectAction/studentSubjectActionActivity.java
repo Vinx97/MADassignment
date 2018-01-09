@@ -1,8 +1,7 @@
-package my.edu.tarc.madassignment;
+package my.edu.tarc.madassignment.studentSubjectAction;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -16,11 +15,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import android.widget.TextView;
+import my.edu.tarc.madassignment.MainActivity;
+import my.edu.tarc.madassignment.R;
+import my.edu.tarc.madassignment.SaveSharedPreferences;
+import my.edu.tarc.madassignment.entities.Subject;
 
-public class studentMenuActivity extends AppCompatActivity {
+public class studentSubjectActionActivity extends AppCompatActivity {
 
+    Subject selectedSubject;
+    String studentid;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -39,7 +44,7 @@ public class studentMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_menu);
+        setContentView(R.layout.activity_student);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -56,13 +61,16 @@ public class studentMenuActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+        String selectedSubject = getIntent().getExtras().getString("clickedsubject");
+        Toast.makeText(getApplicationContext(), selectedSubject.toString() , Toast.LENGTH_LONG).show();
     }
+
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_student_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_main2, menu);
         return true;
     }
 
@@ -77,6 +85,13 @@ public class studentMenuActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        else if(id == R.id.action_logout){
+            SaveSharedPreferences.clear(this);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -84,7 +99,37 @@ public class studentMenuActivity extends AppCompatActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
+    public static class PlaceholderFragment extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
 
+        public PlaceholderFragment() {
+        }
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_document, container, false);
+            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            return rootView;
+        }
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -98,16 +143,19 @@ public class studentMenuActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
+            int bla = 1;
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
                     // Top Rated fragment activity
-                    return new subjects_enrolled();
-
+                    return new documentActivity();
                 case 1:
                     // Games fragment activity
-                    return new cameraActivity();
+                    return new announcementActivity();
+                case 2:
+                    // Movies fragment activity
+                    return new aboutActivity();
             }
 
             return null;
@@ -116,7 +164,7 @@ public class studentMenuActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
     }
 }

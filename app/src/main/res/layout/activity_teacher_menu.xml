@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="my.edu.tarc.madassignment.teacherMenuActivity">
+    tools:context="my.edu.tarc.madassignment.teacherMenu.teacherMenuActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -38,12 +38,6 @@
                 android:layout_height="wrap_content"
                 android:text="MY SUBJECTS" />
 
-            <android.support.design.widget.TabItem
-                android:id="@+id/tabItem2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Create subject" />
-
         </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -52,5 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_post_announcement" />
 </android.support.design.widget.CoordinatorLayout>

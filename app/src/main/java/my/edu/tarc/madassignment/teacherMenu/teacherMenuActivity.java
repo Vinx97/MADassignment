@@ -1,8 +1,10 @@
-package my.edu.tarc.madassignment;
+package my.edu.tarc.madassignment.teacherMenu;
 
-import android.support.design.widget.TabLayout;
+import android.Manifest;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -14,12 +16,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.TextView;
+import my.edu.tarc.madassignment.R;
+import my.edu.tarc.madassignment.SaveSharedPreferences;
 
-public class teacherActivity extends AppCompatActivity {
+public class teacherMenuActivity extends AppCompatActivity{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -35,11 +39,34 @@ public class teacherActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private FloatingActionButton fab;
+    private String userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teacher);
+        setContentView(R.layout.activity_teacher_menu);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 2000);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2001);
+
+        //if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+
+            userid = extras.getString("id");
+
+        //} else {
+            //userid = (String) savedInstanceState.getSerializable("id");
+        //}
+        fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        //fab.setOnTouchListener((View.OnTouchListener) this);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AddSubjectActivity.class);
+                intent.putExtra("id", getUserid());
+                startActivity(intent);
+            }
+        });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -56,15 +83,13 @@ public class teacherActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-
-
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_teacher, menu);
+        getMenuInflater().inflate(R.menu.menu_teacher_menu, menu);
         return true;
     }
 
@@ -77,6 +102,11 @@ public class teacherActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        else if(id == R.id.action_logout){
+            SaveSharedPreferences.clear(this);
+            finish();
             return true;
         }
 
@@ -111,7 +141,7 @@ public class teacherActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_post_announcement, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_my_subject, container, false);
             //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
@@ -135,24 +165,30 @@ public class teacherActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     // Top Rated fragment activity
-                    return new postAnnouncementActivity();
+                    return new mySubjectActivity();
 
                 case 1:
                     // Games fragment activity
-                    return new uploadDocumentActivity();
-
-                case 2:
-                    return new QRCodeActivity();
+                    //return; new createSubjectActivity();
             }
 
             return null;
         }
 
-
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 1;
         }
+    }
+
+    public String getUserid(){
+        return userid;
+    }
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+
+        finishAffinity();
     }
 }

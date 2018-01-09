@@ -1,4 +1,4 @@
-package my.edu.tarc.madassignment;
+package my.edu.tarc.madassignment.teacherMenu;
 
 /**
  * Created by ASUS on 19/11/2017.
@@ -10,12 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class postAnnouncementActivity extends Fragment{
+import my.edu.tarc.madassignment.R;
+
+public class createSubjectActivity extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_post_announcement, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_create_subject, container, false);
 
 
         return rootView;
